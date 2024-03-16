@@ -2,6 +2,8 @@
 #define BITCOINEXCHANGE_HPP
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 template <typename T>
 typename T::iterator easyfind(T &container, int value);

@@ -1,4 +1,4 @@
-#include "easyfind.hpp"
+#include "BitcoinExchange.hpp"
 
 template <typename T>
 typename T::iterator easyfind(T &container, int value)
