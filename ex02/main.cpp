@@ -65,37 +65,28 @@ int main(int argc, char **argv) {
         std::cerr << "Usage: " << argv[0] << " <sequence of positive integers>\n";
         return 1;
     }
-
-	std::vector<int> sequence;
-    for (int i = 1; i < argc; ++i) {
-        int num = std::atoi(argv[i]);
-        if (num < 0) {
-            std::cerr << "Error: Only positive integers are allowed.\n";
-            return 1;
-        }
-        sequence.push_back(num);
+    PMergeMe pm;
+    try {
+        pm = PMergeMe(argc, argv);
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return 1;
     }
-
 	std::cout << "Before: ";
-    for (std::vector<int>::iterator it = sequence.begin(); it != sequence.end(); ++it) {
-        std::cout << *it << " ";
-    }
-    std::cout << "\n";
+    pm.printSequence();
 
     clock_t start = clock();
-
-	PMergeMe pm = PMergeMe(sequence);
 	pm.sort();
 
 	clock_t end = clock();
     double elapsed = double(end - start) / CLOCKS_PER_SEC;
     
-    pm.printSortedSequence();
+	std::cout << "After: ";
+    pm.printSequence();
 
     std::cout << std::fixed << std::setprecision(5); // 소수점 아래 5자리까지 표시
     std::cout << "Time used with std::vector : " << elapsed << " seconds\n";
     
-
     start = clock();
 	// PMergeMe pm2 = PMergeMe(sequence);
 	// pm2.sort();
