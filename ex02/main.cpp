@@ -76,7 +76,9 @@ int main(int argc, char **argv) {
     pm.printSequence();
 
     clock_t start = clock();
+	std::cout << "1 \n";
 	pm.sort();
+	std::cout << "2 \n";
 
 	clock_t end = clock();
     double elapsed = double(end - start) / CLOCKS_PER_SEC;
@@ -87,9 +89,9 @@ int main(int argc, char **argv) {
     std::cout << std::fixed << std::setprecision(5); // 소수점 아래 5자리까지 표시
     std::cout << "Time used with std::vector : " << elapsed << " seconds\n";
     
+	PMergeMe pm2 = PMergeMe(argc, argv);
     start = clock();
-	// PMergeMe pm2 = PMergeMe(sequence);
-	// pm2.sort();
+	pm2.sort();
 	end = clock();
 	elapsed = end - start;
 	std::cout << "Time used with std::deque : " << elapsed << " seconds\n";
