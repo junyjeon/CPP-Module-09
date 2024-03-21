@@ -190,9 +190,9 @@ private:
 	// 5. pair의 두 번째 요소들을 첫 번째 요소들에 삽입. 두 번째 요소들을 첫 번째 요소에 삽입하는 과정에서 야콥스탈 수(Jacobsthal numbers)를 기준으로 이진 탐색
     // 예) (4, 3), (2, 1)에서 두 번째 요소인 3과 1을 이미 정렬된 첫 번째 요소보다 작은 것(3은 4)(1은 2)까지만 비교하여 삽입. 최종 결과: 1 2 3 4
 	void insertSecondElement(std::vector<std::pair<int, int> >& sortedArr);
-	std::vector<std::pair<int, int> >::iterator findSecondElement(int target, std::vector<std::pair<int, int> >& sortedArr);
+	void insertElementInCorrectPosition(int target, std::vector<std::pair<int, int> >& sortedArr, std::vector<int>& jacobsthalNumbers);
 	void insertElementInCorrectPosition(std::vector<std::pair<int, int> >::iterator it, int target, std::vector<std::pair<int, int> >& sortedArr);
-	int binarySearch(int target, int start, int end);
+	int binarySearchWithJacobsthal(int target, int start, int end, std::vector<int>& jacobsthalNumbers, std::vector<std::pair<int, int> >& sortedArr);
 
 	// 5-1. 야콥스탈 수 계산
 	// J(n) = J(n-1) + 2J(n-2) (n > 1) 

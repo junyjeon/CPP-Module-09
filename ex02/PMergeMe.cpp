@@ -174,141 +174,47 @@ void PMergeMe::mergeSort(std::vector<std::pair<int, int> >& pairs, int left, int
     }
 }
 
-// void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr) {
-//     // 1. 야콥스탈 수열 생성
-//     std::vector<int> jacobsthalNumbers = calculateJacobsthalNumbers(sortedArr.size());
-
-//     // 가정: sortedArr는 이미 정렬된 상태이며, 여기에 새로운 요소를 삽입하려고 함.
-// 	// insertPos는 삽입할 위치를 나타내는 변수이며, 초기값은 적절히 설정해야 함.
-// 	int insertPos = 0; // 삽입 위치 초기화
-
-// 	for (size_t i = 0; i < pairs.size(); ++i) {
-// 		if (pairs[i].second != -1) {
-// 			int target = pairs[i].second; // 삽입하려는 값
-// 			int insertPos = -1; // 삽입 위치 초기화
-// 			int stepIndex = jacobsthalNumbers.size() - 1; // 가장 큰 야콥스탈 수부터 시작
-// 			int pos = 0; // 탐색 시작 위치
-// 			while (stepIndex >= 0 && pos < sortedArr.size()) {
-// 				int step = jacobsthalNumbers[stepIndex]; // 현재 단계에서의 건너뛸 요소 수
-// 				if (pos + step < sortedArr.size() && sortedArr[pos + step].first <= target) {
-// 					// 현재 위치 + 건너뛸 요소 수가 삽입할 값보다 작거나 같으면, 거기서부터 다시 탐색 시작
-// 					pos += step;
-// 				} else {
-// 					// 삽입할 값보다 큰 요소를 찾았거나, 더 이상 건너뛸 수 없으면 다음 단계로
-// 					stepIndex--;
-// 				}
-// 			}
-// 			insertPos = pos; // 삽입 위치 결정
-
-// 			// 야콥스탈 수열을 이용해 삽입 위치 결정
-			
-// 			// 여기서는 단순화를 위해 실제 야콥스탈 수열을 사용하는 로직 대신, 삽입 위치를 찾는 기본적인 아이디어만 제공
-// 			// 실제로는 야콥스탈 수열의 값을 이용해 삽입 위치를 결정하는 복잡한 로직이 필요함
-
-// 			// 예시: target 값을 적절한 위치에 삽입하는 로직 구현
-// 			// 이 부분은 실제 야콥스탈 수열을 이용한 삽입 로직에 따라 달라질 수 있음
-// 			for (size_t j = 0; j < sortedArr.size(); ++j) {
-// 				if (sortedArr[j].first > target) {
-// 					insertPos = j;
-// 					break;
-// 				}
-// 			}
-
-// 			// 찾은 위치에 삽입
-// 			if (insertPos != -1) {
-// 				sortedArr.insert(sortedArr.begin() + insertPos, std::make_pair(target, -1));
-// 			}
-// 		}
-//     }
+// // 두 번째 요소를 찾는 함수
+// std::vector<std::pair<int, int> >::iterator PMergeMe::findSecondElement(int target, std::vector<std::pair<int, int> >& sortedArr) {
+//     return std::find(sortedArr.begin(), sortedArr.end(), std::make_pair(target, -1));
 // }
 
-// void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr) {
-//     // 1. 야콥스탈 수열 생성. 배열의 크기보다 작거나 같은 가장 큰 야콥스탈 수를 찾음.
-//     std::vector<int> jacobsthalNumbers = calculateJacobsthalNumbers(10);
-// 	std::cout << "sortedArr.size(): " << sortedArr.size() << std::endl;
-	// std::cout << "Jacobsthal Numbers: ";
-    // for (std::vector<int>::iterator it = jacobsthalNumbers.begin(); it != jacobsthalNumbers.end(); ++it) {
-    //     std::cout << *it << " ";
-    // }
-    // std::cout << std::endl;
-//     for (size_t i = 0; i < pairs.size(); ++i) {
-//         if (pairs[i].second != -1) {
-//             int target = pairs[i].second; // 삽입하려는 값
-//             int insertPos = -1; // 삽입 위치 초기화
-//             int stepIndex = jacobsthalNumbers.size() - 1; // 가장 큰 야콥스탈 수부터 시작
-//             size_t pos = 0; // 탐색 시작 위치
-
-//             while (stepIndex >= 0 && pos < sortedArr.size()) {
-//                 int step = jacobsthalNumbers[stepIndex]; // 현재 단계에서의 건너뛸 요소 수
-//                 if (pos + step < sortedArr.size() && sortedArr[pos + step].first <= target) {
-//                     // 현재 위치 + 건너뛸 요소 수가 삽입할 값보다 작거나 같으면, 거기서부터 다시 탐색 시작
-//                     pos += step;
-//                 } else {
-//                     // 삽입할 값보다 큰 요소를 찾았거나, 더 이상 건너뛸 수 없으면 다음 단계로
-//                     stepIndex--;
-//                 }
-//             }
-//             insertPos = pos; // 대략적인 삽입 위치 결정
-
-//             // // 선형 탐색을 통해 실제 삽입 위치 결정
-//             // while (insertPos < sortedArr.size() && sortedArr[insertPos].first < target) {
-//             //     insertPos++;
-//             // }
-
-//             // 찾은 위치에 삽입
-//             sortedArr.insert(sortedArr.begin() + insertPos, std::make_pair(target, -1));
+// // 두 번째 요소를 적절한 위치에 삽입하는 함수
+// void PMergeMe::insertElementInCorrectPosition(std::vector<std::pair<int, int> >::iterator it, int target, std::vector<std::pair<int, int> >& sortedArr) {
+//     if (it == sortedArr.end()) {
+//         // 삽입할 요소를 sortedArr의 끝에 추가
+//         sortedArr.push_back(std::make_pair(target, -1));
+//         // 삽입된 요소를 올바른 위치로 이동
+// 		// 여기서 야콥스탈 수를 사용해보자.
+//         for (int j = sortedArr.size() - 1; j > 0 && sortedArr[j].first < sortedArr[j - 1].first; --j) {
+//             std::swap(sortedArr[j], sortedArr[j - 1]);
 //         }
 //     }
 // }
 
-// 5. 두 번째 요소들을 첫 번째 요소에 삽입. 두 번째 요소들을 첫 번째 요소에 삽입하는 과정에서 야콥스탈 수(Jacobsthal numbers)를 기준으로 이진 탐색. 야콥스탈 수를 사용하는 이유는 아래 예)에 있음.
-// 예) (4, 3), (2, 1)에서 두 번째 원소인 3과 1을 이미 정렬된 첫 번째 원소보다 작은 것(3 -> 4)(1 -> 2)까지만, 그리고 야콥 스탈 수를 아이디어로 비교하여 삽입. 최종 결과: 1 2 3 4
-// J(n) = J(n-1) + 2J(n-2) (n > 1) 
+// // 두 번째 요소를 첫 번째 요소에 삽입하는 함수
 // void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr) {
-//     // 1. 야콥스탈 수열 생성. 배열의 크기보다 작거나 같은 가장 큰 야콥스탈 수를 찾음.
+//     // 1. 야콥스탈 수열 생성. 배열의 크기보다 작거나 같은 가장 큰 야콥스탈 수 까지 넣음.
 //     std::vector<int> jacobsthalNumbers = calculateJacobsthalNumbers(sortedArr.size());
-//     // std::cout << "sortedArr.size(): " << sortedArr.size() << std::endl;
-//     // std::cout << "Jacobsthal Numbers: ";
-//     // for (std::vector<int>::iterator it = jacobsthalNumbers.begin(); it != jacobsthalNumbers.end(); ++it) {
-//     //     std::cout << *it << " ";
-//     // }
-//     // std::cout << std::endl;
 
-// 	for (size_t i = 0; i < pairs.size(); ++i) {
+//     for (size_t i = 0; i < pairs.size(); ++i) {
 //         if (pairs[i].first != -1 && pairs[i].second != -1) {
 //             int target = pairs[i].second;
-//             std::vector<std::pair<int, int> >::iterator it = std::find(sortedArr.begin(), sortedArr.end(), std::make_pair(target, -1));
-//             if (it == sortedArr.end()) {
-//                 // 삽입할 요소를 sortedArr의 끝에 추가
-//                 sortedArr.push_back(std::make_pair(target, -1));
-//                 // 삽입된 요소를 올바른 위치로 이동
-//                 for (int j = sortedArr.size() - 1; j > 0 && sortedArr[j].first < sortedArr[j - 1].first; --j) {
-//                     std::swap(sortedArr[j], sortedArr[j - 1]);
-//                 }
-//                 // std::cout << "Insert: " << target << std::endl;
-//             }
+//             std::vector<std::pair<int, int> >::iterator it = findSecondElement(target, sortedArr); //target을 찾고
+//             insertElementInCorrectPosition(it, target, sortedArr); //target이 없으면 삽입
 //         }
 //     }
 // }
 
-// 두 번째 요소를 찾는 함수
-std::vector<std::pair<int, int> >::iterator PMergeMe::findSecondElement(int target, std::vector<std::pair<int, int> >& sortedArr) {
-    return std::find(sortedArr.begin(), sortedArr.end(), std::make_pair(target, -1));
-}
-
 // 두 번째 요소를 적절한 위치에 삽입하는 함수
-void PMergeMe::insertElementInCorrectPosition(std::vector<std::pair<int, int> >::iterator it, int target, std::vector<std::pair<int, int> >& sortedArr) {
-    if (it == sortedArr.end()) {
-        // 삽입할 요소를 sortedArr의 끝에 추가
-        sortedArr.push_back(std::make_pair(target, -1));
-        // 삽입된 요소를 올바른 위치로 이동
-		// 여기서 야콥스탈 수를 사용해보자.
-        for (int j = sortedArr.size() - 1; j > 0 && sortedArr[j].first < sortedArr[j - 1].first; --j) {
-            std::swap(sortedArr[j], sortedArr[j - 1]);
-        }
-    }
+void PMergeMe::insertElementInCorrectPosition(int target, std::vector<std::pair<int, int> >& sortedArr, std::vector<int>& jacobsthalNumbers) {
+    // 야콥스탈 수열을 이용하여 삽입할 위치를 찾음
+    int position = binarySearchWithJacobsthal(target, 0, sortedArr.size() - 1, jacobsthalNumbers, sortedArr);
+	// 삽입할 위치에 새 요소를 삽입
+    sortedArr.insert(sortedArr.begin() + position, std::make_pair(target, -1));
 }
 
+#include <thread>
 // 두 번째 요소를 첫 번째 요소에 삽입하는 함수
 void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr) {
     // 1. 야콥스탈 수열 생성. 배열의 크기보다 작거나 같은 가장 큰 야콥스탈 수 까지 넣음.
@@ -317,8 +223,10 @@ void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr)
     for (size_t i = 0; i < pairs.size(); ++i) {
         if (pairs[i].first != -1 && pairs[i].second != -1) {
             int target = pairs[i].second;
-            std::vector<std::pair<int, int> >::iterator it = findSecondElement(target, sortedArr); //target을 찾고
-            insertElementInCorrectPosition(it, target, sortedArr); //target이 없으면 삽입
+            // 야콥스탈 수열을 이용하여 삽입할 위치를 찾고 삽입
+            insertElementInCorrectPosition(target, sortedArr, jacobsthalNumbers);
+			std::cout << "123무한루프 target: " << target << std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     }
 }
@@ -344,19 +252,50 @@ std::vector<int> PMergeMe::calculateJacobsthalNumbers(int n) {
     return jacobsthalNumbers;
 }
 
-// 이진 탐색
-int PMergeMe::binarySearch(int target, int start, int end) {
+// // 이진 탐색
+// int PMergeMe::binarySearch(int target, int start, int end) {
+//     while (start <= end) {
+//         int mid = start + (end - start) / 2;
+//         if (sortedArr[mid].first == target) {
+//             return mid;
+//         } else if (sortedArr[mid].first < target) {
+//             start = mid + 1;
+//         } else {
+//             end = mid - 1;
+//         }
+//     }
+//     return start;
+// }
+
+// 야콥스탈 수를 이용하여 이진 탐색
+int PMergeMe::binarySearchWithJacobsthal(int target, int start, int end, std::vector<int>& jacobsthalNumbers, std::vector<std::pair<int, int> >& sortedArr) {
     while (start <= end) {
-        int mid = start + (end - start) / 2;
+        // 야콥스탈 수열을 사용하여 mid를 계산
+        int mid = start + jacobsthalNumbers.back();
+        // mid가 범위를 벗어나면 야콥스탈 수열에서 마지막 요소를 제거
+        if (mid > end) {
+            jacobsthalNumbers.pop_back();
+            continue;
+        }
+
+        // mid와 target을 비교
         if (sortedArr[mid].first == target) {
+            // target을 찾으면 mid를 반환
             return mid;
         } else if (sortedArr[mid].first < target) {
+            // mid가 target보다 작으면 시작 인덱스를 mid+1로 업데이트
             start = mid + 1;
         } else {
+            // mid가 target보다 크면 끝 인덱스를 mid-1로 업데이트
             end = mid - 1;
         }
+
+        // 야콥스탈 수열에서 마지막 요소를 제거
+        jacobsthalNumbers.pop_back();
     }
-    return start;
+
+    // target을 찾지 못하면 -1을 반환
+    return -1;
 }
 
 // // 5-2. 야콥 스탈 수를 이용한 이진 탐색으로 삽입 위치 찾기
@@ -379,6 +318,7 @@ int PMergeMe::binarySearch(int target, int start, int end) {
 // [(3, 0), (1, 1), (2, 2)]
 // [(1, 1), (2, 2), (3, 0)]
 // [1, 2, 3]
+// Index[1, 2, 0]
 void PMergeMe::applySortedPairs() {
     for (std::vector<std::pair<int, int> >::iterator it = indexPairs.begin(); it != indexPairs.end(); ++it) {
         arr[it->second] = it->first; // 인덱스에 해당하는 값 변경
