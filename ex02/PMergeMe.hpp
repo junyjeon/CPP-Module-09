@@ -150,6 +150,7 @@ public:
 	~PMergeMe();
 
     void printSequence() const;
+	void printSortedSequence() const;
 	void sort();
 
 	std::vector<int> getSequence() const;
@@ -176,20 +177,30 @@ private:
 	// -> 최종적으로 [(8, 6)]과 [(7, 3)]이 남음
 	void GroupElements(std::vector<std::pair<int, int> >& currentPairs);
 
+	// 3.5 작은 배열 중 첫 번째 요소는 큰 배열의 첫 번째 요소보다 작으니까 먼저 삽입
+	void preprocessFirstPair(std::vector<std::pair<int, int> >& pairs);
+
     // 4. 첫 번째 요소 기준 정렬. 그룹이 2개 이하일 때, pair의 첫 번째 요소들을 기준으로 삽입 정렬.
 	// 첫 번째 요소가 이동할 때, 두 번째 요소도 함께 이동해야 함 -> 아직 모름.
     // 예) (2, 1), (4, 3) -> (4, 3), (2, 1)
 	void sortPairsByFirstElement(std::vector<std::pair<int, int> >& paired);
+	void merge(std::vector<std::pair<int, int> >& pairs, int left, int mid, int right);
+	void mergeSort(std::vector<std::pair<int, int> >& pairs, int left, int right);
 
 	// 5. pair의 두 번째 요소들을 첫 번째 요소들에 삽입. 두 번째 요소들을 첫 번째 요소에 삽입하는 과정에서 야콥스탈 수(Jacobsthal numbers)를 기준으로 이진 탐색
     // 예) (4, 3), (2, 1)에서 두 번째 요소인 3과 1을 이미 정렬된 첫 번째 요소보다 작은 것(3은 4)(1은 2)까지만 비교하여 삽입. 최종 결과: 1 2 3 4
-	// J(n) = J(n-1) + 2J(n-2) + 1 (n > 1) 
 	void insertSecondElement(std::vector<std::pair<int, int> >& sortedArr);
+	std::vector<std::pair<int, int> >::iterator findSecondElement(int target, std::vector<std::pair<int, int> >& sortedArr);
+	void insertElementInCorrectPosition(std::vector<std::pair<int, int> >::iterator it, int target, std::vector<std::pair<int, int> >& sortedArr);
+	int binarySearch(int target, int start, int end);
 
 	// 5-1. 야콥스탈 수 계산
+	// J(n) = J(n-1) + 2J(n-2) (n > 1) 
 	std::vector<int> calculateJacobsthalNumbers(int n);
 
 	// 5-2. 야콥 스탈 수를 이용한 이진 탐색으로 삽입 위치 찾기
+	int findInsertPosition(const std::vector<std::pair<int, int> >& sortedArr, int target, const std::vector<int>& jacobsthalNumbers);
+
 	// 5-3. 찾은 위치에 삽입
 
 	// 6. 정렬된 pairs를 원래 배열에 적용
