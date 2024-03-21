@@ -250,7 +250,7 @@ void PMergeMe::initializeArray(int argc, char** argv) {
     std::vector<int> tempArr;
     for (int i = 1; i < argc; ++i) {
         int num = std::atoi(argv[i]);
-        if (num < 0) {
+        if (num <= 0) {
             throw std::invalid_argument("Error: Only positive integers are allowed.\n");
         }
         if (std::find(tempArr.begin(), tempArr.end(), num) != tempArr.end()) {
