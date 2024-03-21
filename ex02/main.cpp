@@ -79,20 +79,20 @@ int main(int argc, char **argv) {
 	pm.sort();
 
 	clock_t end = clock();
-    double elapsed = double(end - start) / CLOCKS_PER_SEC;
+    double elapsed = double(end - start) * 1000.0 / CLOCKS_PER_SEC;;
     
 	std::cout << "After: ";
     pm.display();
 
     std::cout << std::fixed << std::setprecision(5); // 소수점 아래 5자리까지 표시
-    std::cout << "Time used with std::vector : " << elapsed << " second\n";
+    std::cout << "Time used with std::vector : " << elapsed << " ms\n";
     
 	PMergeMe pm2 = PMergeMe(argc, argv);
     start = clock();
 	pm2.dequeSort();
 	end = clock();
-	elapsed = double(end - start) / CLOCKS_PER_SEC;
-	std::cout << "Time used with std::deque : " << elapsed << " second\n";
+	elapsed = double(end - start) * 1000.0 / CLOCKS_PER_SEC;;
+	std::cout << "Time used with std::deque : " << elapsed << " ms\n";
     
 	return 0;
 }
