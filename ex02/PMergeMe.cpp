@@ -158,16 +158,17 @@ void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr)
     for (size_t i = 0; i < sortedArr.size(); ++i) {
         if (sortedArr[i].second != -1) {
             int target = sortedArr[i].second;
-            std::pair<int, int> targetPair = std::make_pair(target, -1); // target을 찾기 위한 pair 생성
-            int insertPos = binarySearch(sortedArr, targetPair, 0, i - 1); // 이진 탐색으로 삽입 위치 찾기
+            std::pair<int, int> targetPair = std::make_pair(target, -1);
+            int insertPos = binarySearch(sortedArr, targetPair, 0, i - 1);
 
             // 삽입 위치부터 i까지의 원소들을 오른쪽으로 이동
             for (int j = i - 1; j >= insertPos; --j) {
                 sortedArr[j + 1] = sortedArr[j];
             }
 
-            // target을 삽입 위치에 삽입
+            // target을 삽입 위치에 삽입하고, 원래의 pair에서 두 번째 요소를 -1로 변경
             sortedArr[insertPos] = std::make_pair(target, -1);
+            sortedArr[i].second = -1;
         }
     }
 }
