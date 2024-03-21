@@ -1,14 +1,23 @@
-#include "Span.hpp"
+#include "RPN.hpp"
 
-int main()
-{
-    Span sp = Span(5);
-    sp.addNumber(6);
-    sp.addNumber(3);
-    sp.addNumber(17);
-    sp.addNumber(9);
-    sp.addNumber(11);
-    std::cout << sp.shortestSpan() << std::endl;
-    std::cout << sp.longestSpan() << std::endl;
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        std::cout << "Error: Wrong number of arguments." << std::endl;
+        std::cout << "Usage: " << argv[0] << " <expression>" << std::endl;
+        return 1;
+    }
+
+    std::string expression = argv[1];
+    RPN rpn;
+
+    try {
+        rpn.calculate(expression);
+        int result = rpn.getResult();
+        std::cout << result << std::endl;
+    } catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        return 1;
+    }
+
     return 0;
 }

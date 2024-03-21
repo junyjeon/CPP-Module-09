@@ -1,4 +1,4 @@
-NAME		=	Span
+NAME		=	RPN
 
 CXX			=	c++ -g2
 CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
@@ -6,7 +6,7 @@ CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98
 
 BUILD_DIR	=	build
 
-SRC		=	main.cpp Span.cpp
+SRC		=	main.cpp RPN.cpp
 OBJ		=	$(patsubst %.cpp, $(BUILD_DIR)/%.o, $(SRC))
 
 all:	$(NAME)
