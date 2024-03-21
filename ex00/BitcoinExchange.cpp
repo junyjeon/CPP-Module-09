@@ -19,10 +19,10 @@ void BitcoinExchange::processFile(const std::string& inputFile) {
             continue;
         }
         
+        // date 저장
         std::getline(lineStream, date, '|');
-		
-        // date를 파싱하여  환율을 출력
-        try {
+        
+		try {
 			// 0000-00-00 | 00+00 일 때
 			if (!(lineStream >> value) || lineStream >> leftOver || !(lineStream.fail())) {
 				throw std::runtime_error("bad input.");
