@@ -244,7 +244,7 @@ void PMergeMe::display() const {
 	std::cout << std::endl;
 }
 
-PMergeMe::PMergeMe() {};
+PMergeMe::PMergeMe() {}
 
 void PMergeMe::initializeArray(int argc, char** argv) {
     std::vector<int> tempArr;
@@ -284,7 +284,7 @@ void PMergeMe::initializeArrayDeque(int argc, char** argv) {
 PMergeMe::PMergeMe(int argc, char** argv) {
     initializeArray(argc, argv);
 	initializeArrayDeque(argc, argv);
-};
+}
 
 PMergeMe::PMergeMe(const PMergeMe& other) {
 	if (this != &other) {
@@ -299,7 +299,7 @@ PMergeMe& PMergeMe::operator=(const PMergeMe& other) {
 	return *this;
 }
 
-PMergeMe::~PMergeMe() {};
+PMergeMe::~PMergeMe() {}
 
 std::vector<int> PMergeMe::getSequence() const {
 	return this->arr;
