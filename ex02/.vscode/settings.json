@@ -106,6 +106,7 @@
     "algorithm": "cpp",
     "charconv": "cpp",
     "thread": "cpp",
-    "version": "cpp"
+    "version": "cpp",
+    "deque": "cpp"
   }
 }

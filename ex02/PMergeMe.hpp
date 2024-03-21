@@ -9,6 +9,7 @@
 #include <cstdlib> // std::atoi
 #include <algorithm> // std::swap
 #include <utility> // std::pair
+#include <deque> // std::deque
 
 /*
 포드 존슨 알고리즘을 구현. 정수 배열을 효율적으로 정렬하는 방법.
@@ -149,16 +150,21 @@ public:
 	PMergeMe &operator=(PMergeMe const &);
 	~PMergeMe();
 
-    void printSequence() const;
-	void printSortedSequence() const;
+    void display() const;
+	void dequeDisplay() const;
 	void sort();
+	void dequeSort();
 
 	std::vector<int> getSequence() const;
+	std::deque<int> getSequenceDeque() const;
 
 private:
     std::vector<int> arr; // {2, 1, 4, 3}
 	std::vector<std::pair<int, int> > indexPairs; // <int(값), int(인덱스)>
 	std::vector<std::pair<int, int> > pairs; // <int(큰 수), int(작은 수)>
+	std::vector<int> jacobsthalNumbers; // 야콥스탈 수열
+
+	void initializeArray(int argc, char** argv);
 
 	// 1. indexPairs 초기화. pair<int(값), int(인덱스)>
 	// 예) 2 1 4 3 -> (2, 0), (1, 1), (4, 2), (3, 3)
@@ -173,7 +179,6 @@ private:
 	// 예) (값) 2 1 4 3 -> (2, 1), (4, 3)
 	// 예) (index) 0 1 2 3 -> (0, 1), (2, 3)
 	// 예) 8 2 4 6 1 3 7 5 -> (8, 2), (6, 4), (3, 1), (7, 5)
-	// -> [(8, 2), (6, 4)]와 [(3, 1), (7, 5)] 비교
 	// -> 최종적으로 [(8, 6)]과 [(7, 3)]이 남음
 	void GroupElements(std::vector<std::pair<int, int> >& currentPairs);
 
@@ -184,29 +189,46 @@ private:
 	// 첫 번째 요소가 이동할 때, 두 번째 요소도 함께 이동해야 함 -> 아직 모름.
     // 예) (2, 1), (4, 3) -> (4, 3), (2, 1)
 	void sortPairsByFirstElement(std::vector<std::pair<int, int> >& paired);
-	void merge(std::vector<std::pair<int, int> >& pairs, int left, int mid, int right);
-	void mergeSort(std::vector<std::pair<int, int> >& pairs, int left, int right);
+	int binarySearch(const std::vector<std::pair<int, int> >& pairs, const std::pair<int, int>& target, int start, int end);
 
 	// 5. pair의 두 번째 요소들을 첫 번째 요소들에 삽입. 두 번째 요소들을 첫 번째 요소에 삽입하는 과정에서 야콥스탈 수(Jacobsthal numbers)를 기준으로 이진 탐색
     // 예) (4, 3), (2, 1)에서 두 번째 요소인 3과 1을 이미 정렬된 첫 번째 요소보다 작은 것(3은 4)(1은 2)까지만 비교하여 삽입. 최종 결과: 1 2 3 4
 	void insertSecondElement(std::vector<std::pair<int, int> >& sortedArr);
-	void insertElementInCorrectPosition(int target, std::vector<std::pair<int, int> >& sortedArr, std::vector<int>& jacobsthalNumbers);
-	void insertElementInCorrectPosition(std::vector<std::pair<int, int> >::iterator it, int target, std::vector<std::pair<int, int> >& sortedArr);
-	int binarySearchWithJacobsthal(int target, int start, int end, std::vector<int>& jacobsthalNumbers, std::vector<std::pair<int, int> >& sortedArr);
+	// int binarySearchWithJacobsthal(int target, int start, int end, std::vector<int>& jacobsthalNumbers, std::vector<std::pair<int, int> >& sortedArr);
 
 	// 5-1. 야콥스탈 수 계산
 	// J(n) = J(n-1) + 2J(n-2) (n > 1) 
 	std::vector<int> calculateJacobsthalNumbers(int n);
 
 	// 5-2. 야콥 스탈 수를 이용한 이진 탐색으로 삽입 위치 찾기
-	int findInsertPosition(const std::vector<std::pair<int, int> >& sortedArr, int target, const std::vector<int>& jacobsthalNumbers);
-
 	// 5-3. 찾은 위치에 삽입
+	// void insertElementInCorrectPosition(int insertPos, int target, std::vector<std::pair<int, int> >& sortedArr);
 
 	// 6. 정렬된 pairs를 원래 배열에 적용
 	void applySortedPairs();
+	
+	// ----------Deque---------- //
+
+	std::deque<std::pair<int, int> > dequeIndexPairs;
+	std::deque<std::pair<int, int> > dequePairs;
+	std::deque<int> dequeArr;
+	std::deque<int> jacobsthalNumbersDeque;
+	
+	void initializeArrayDeque(int argc, char** argv);
+	void initIndexPairsDeque();
+	void initPairsDeque();
+
+	void GroupElements(std::deque<std::pair<int, int> >& currentPairs);
+	void preprocessFirstPair(std::deque<std::pair<int, int> >& pairs);
+	
+	void sortPairsByFirstElement(std::deque<std::pair<int, int> >& paired);
+	int binarySearch(const std::deque<std::pair<int, int> >& pairs, const std::pair<int, int>& target, int start, int end);
+
+	void insertSecondElement(std::deque<std::pair<int, int> >& sortedArr);
+	// void insertElementInCorrectPosition(std::deque<std::pair<int, int> >::iterator it, int target, std::deque<std::pair<int, int> >& sortedArr);
+	// int binarySearchWithJacobsthal(int target, int start, int end, std::deque<int>& jacobsthalNumbers, std::deque<std::pair<int, int> >& sortedArr);
+	// std::deque<int> calculateJacobsthalNumbersDeque(int n);
+	void applySortedPairsDeque();
 };
-
-
 
 #endif // PMERGEME_HPP

@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 	std::cout << "Before: ";
-    pm.printSequence();
+    pm.display();
 
     clock_t start = clock();
 	pm.sort();
@@ -82,17 +82,17 @@ int main(int argc, char **argv) {
     double elapsed = double(end - start) / CLOCKS_PER_SEC;
     
 	std::cout << "After: ";
-    pm.printSortedSequence();
+    pm.display();
 
     std::cout << std::fixed << std::setprecision(5); // 소수점 아래 5자리까지 표시
-    std::cout << "Time used with std::vector : " << elapsed << " seconds\n";
+    std::cout << "Time used with std::vector : " << elapsed << " second\n";
     
-	// PMergeMe pm2 = PMergeMe(argc, argv);
-    // start = clock();
-	// pm2.sort();
-	// end = clock();
-	// elapsed = end - start;
-	// std::cout << "Time used with std::deque : " << elapsed << " seconds\n";
+	PMergeMe pm2 = PMergeMe(argc, argv);
+    start = clock();
+	pm2.dequeSort();
+	end = clock();
+	elapsed = double(end - start) / CLOCKS_PER_SEC;
+	std::cout << "Time used with std::deque : " << elapsed << " second\n";
     
 	return 0;
 }
