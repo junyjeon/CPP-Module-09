@@ -51,6 +51,7 @@ void PMergeMe::sort() {
 	// 	std::cout << "(" << it->first << ", " << it->second << "), ";
 	// }
 	// std::cout << std::endl;
+
 	// insertSecondElement() 이 함수 안에서
 	// 5-1. 야콥스탈 수 계산 calculateJacobsthalNumbers();
 	// => J(n) = J(n-1) + 2J(n-2) + 1 (n > 1)
@@ -156,19 +157,16 @@ int PMergeMe::binarySearch(const std::vector<std::pair<int, int> >& pairs, const
 // 5. pair의 두 번째 요소들을 첫 번째 요소들에 삽입. 두 번째 요소들을 첫 번째 요소에 삽입하는 과정에서 야콥스탈 수(Jacobsthal numbers)를 기준으로 이진 탐색
 void PMergeMe::insertSecondElement(std::vector<std::pair<int, int> >& sortedArr) {
     for (size_t i = 0; i < sortedArr.size(); ++i) {
-        if (sortedArr[i].second != -1) {
+        if (sortedArr[i].second != -1 && sortedArr[i].second < sortedArr[i].first) {
             int target = sortedArr[i].second;
             std::pair<int, int> targetPair = std::make_pair(target, -1);
-            int insertPos = binarySearch(sortedArr, targetPair, 0, i - 1);
+            int insertPos = binarySearch(sortedArr, targetPair, 0, i);
 
-            // 삽입 위치부터 i까지의 원소들을 오른쪽으로 이동
-            for (int j = i - 1; j >= insertPos; --j) {
-                sortedArr[j + 1] = sortedArr[j];
-            }
+            // 삽입할 위치 바로 뒤에 새로운 원소를 추가
+            sortedArr.insert(sortedArr.begin() + insertPos, targetPair);
 
-            // target을 삽입 위치에 삽입하고, 원래의 pair에서 두 번째 요소를 -1로 변경
-            sortedArr[insertPos] = std::make_pair(target, -1);
-            sortedArr[i].second = -1;
+            // 원래의 pair에서 두 번째 요소를 -1로 변경
+            sortedArr[i + 1].second = -1;
         }
     }
 }
@@ -233,9 +231,9 @@ std::vector<int> PMergeMe::calculateJacobsthalNumbers(int n) {
 // [1, 2, 3]
 // Index[1, 2, 0]
 void PMergeMe::applySortedPairs() {
-    arr.clear(); // arr 벡터 초기화
+    arr.clear();
     for (std::vector<std::pair<int, int> >::iterator it = pairs.begin(); it != pairs.end(); ++it) {
-        arr.push_back(it->first); // 첫 번째 요소를 arr 벡터에 추가
+        arr.push_back(it->first);
     }
 }
 
@@ -252,7 +250,7 @@ void PMergeMe::initializeArray(int argc, char** argv) {
     std::vector<int> tempArr;
     for (int i = 1; i < argc; ++i) {
         int num = std::atoi(argv[i]);
-        if (num <= 0) {
+        if (num < 0) {
             throw std::invalid_argument("Error: Only positive integers are allowed.\n");
         }
         if (std::find(tempArr.begin(), tempArr.end(), num) != tempArr.end()) {
@@ -267,7 +265,7 @@ void PMergeMe::initializeArray(int argc, char** argv) {
         throw std::invalid_argument("Error: The sequence must contain more than two elements.\n");
     }
     
-    jacobsthalNumbers = calculateJacobsthalNumbers(arr.size() + 1);
+    // jacobsthalNumbers = calculateJacobsthalNumbers(arr.size() + 1);
 }
 
 void PMergeMe::initializeArrayDeque(int argc, char** argv) {
@@ -393,18 +391,16 @@ int PMergeMe::binarySearch(const std::deque<std::pair<int, int> >& pairs, const 
 
 void PMergeMe::insertSecondElement(std::deque<std::pair<int, int> >& sortedArr) {
     for (size_t i = 0; i < sortedArr.size(); ++i) {
-        if (sortedArr[i].second != -1) {
+        if (sortedArr[i].second != -1 && sortedArr[i].second < sortedArr[i].first) {
             int target = sortedArr[i].second;
             std::pair<int, int> targetPair = std::make_pair(target, -1);
-            int insertPos = binarySearch(sortedArr, targetPair, 0, i - 1);
+            int insertPos = binarySearch(sortedArr, targetPair, 0, i);
 
-            // 삽입 위치부터 i까지의 원소들을 오른쪽으로 이동
-            for (int j = i - 1; j >= insertPos; --j) {
-                sortedArr[j + 1] = sortedArr[j];
-            }
+            // 삽입할 위치 바로 뒤에 새로운 원소를 추가
+            sortedArr.insert(sortedArr.begin() + insertPos, targetPair);
 
-            // target을 삽입 위치에 삽입
-            sortedArr[insertPos] = std::make_pair(target, -1);
+            // 원래의 pair에서 두 번째 요소를 -1로 변경
+            sortedArr[i + 1].second = -1;
         }
     }
 }
